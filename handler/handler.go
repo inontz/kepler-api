@@ -14,7 +14,7 @@ import (
 func Index(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
-		"message": "🚀 Welcome to Kepler. 🚀",
+		"message": "Welcome to Kepler. 🚀",
 	})
 }
 
