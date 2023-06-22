@@ -5,10 +5,16 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/inontz/kepler-go/router"
+	"github.com/inontz/kepler-api/handler"
 
 	"github.com/gin-gonic/gin"
 )
+
+func registerRouter(r *gin.RouterGroup) {
+	r.GET("/", handler.Index)
+	r.GET("/webhook", handler.Webhook)
+
+}
 
 var (
 	app *gin.Engine
@@ -16,7 +22,7 @@ var (
 
 // init gin app
 func init() {
-	app := gin.Default()
+	app = gin.New()
 
 	// Handling routing errors
 	app.NoRoute(func(c *gin.Context) {
@@ -27,8 +33,10 @@ func init() {
 		}
 		c.String(http.StatusBadRequest, sb.String())
 	})
-	
-	router.Routes(app)
+
+	r := app.Group("/")
+
+	registerRouter(r)
 
 }
 
