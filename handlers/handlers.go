@@ -1,27 +1,31 @@
-package handler
+package handlers
 
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/line/line-bot-sdk-go/v7/linebot"
 	qrcode "github.com/skip2/go-qrcode"
 )
 
+var Bot *linebot.Client
+var Err error
 
+func init() {
+	Bot, Err = linebot.New(
+		os.Getenv("CHANNEL_SECRET"),
+		os.Getenv("CHANNEL_TOKEN"),
+	)
+
+}
 func Index(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  "OK",
 		"message": "Welcome to Kepler. 🚀",
-	})
-}
-
-func Webhook(c *gin.Context){
-	c.JSON(http.StatusOK, gin.H{
-		"status":  "OK",
-		"message": "🚀 Accepted Request. 🚀",
 	})
 }
 

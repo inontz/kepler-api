@@ -1,22 +1,17 @@
-package api
+package main
 
 import (
 	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/inontz/kepler-api/routes"
-
 	"github.com/gin-gonic/gin"
+	"github.com/inontz/kepler-api/routes"
 )
 
-var (
-	app *gin.Engine
-)
+func main() {
 
-// init gin app
-func init() {
-	app = gin.New()
+	app := gin.Default()
 
 	// Handling routing errors
 	app.NoRoute(func(c *gin.Context) {
@@ -30,10 +25,5 @@ func init() {
 
 	r := app.Group("/")
 	routes.RegisterRouter(r)
-
-}
-
-// entrypoint
-func Handler(w http.ResponseWriter, r *http.Request) {
-	app.ServeHTTP(w, r)
+	app.Run(":3000")
 }
